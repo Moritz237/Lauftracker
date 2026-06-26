@@ -1,9 +1,9 @@
 # Stage 1: Frontend bauen
 FROM node:20-alpine AS builder
 WORKDIR /app
-COPY frontend/package*.json ./
+COPY package*.json ./
 RUN npm ci
-COPY frontend/ ./
+COPY . ./
 RUN npm run build
 
 # Stage 2: PocketBase mit gebautem Frontend in pb_public
