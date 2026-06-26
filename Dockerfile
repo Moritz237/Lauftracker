@@ -9,4 +9,4 @@ RUN npm run build
 # Stage 2: PocketBase mit gebautem Frontend in pb_public
 FROM ghcr.io/coollabsio/pocketbase:latest
 COPY --from=builder /app/dist /app/pb_public
-CMD ["/bin/sh", "-c", "/app/pocketbase serve --http=0.0.0.0:8080 --dir=/app/pb_data --initialAdminEmail=$PB_ADMIN_EMAIL --initialAdminPassword=$PB_ADMIN_PASSWORD"]
+CMD ["/bin/sh", "-c", "/app/pocketbase superuser upsert $PB_ADMIN_EMAIL $PB_ADMIN_PASSWORD --dir=/app/pb_data 2>/dev/null || true; exec /app/pocketbase serve --http=0.0.0.0:8080 --dir=/app/pb_data"]
